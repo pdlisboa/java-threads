@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: webflux-example
+
+
+env:
+  url-a: ${SERVICE_A_URL:http://test:8080}
+  url-b: ${SERVICE_B_URL:http://test:8080}
+  url-c: ${SERVICE_C_URL:http://test:8080}

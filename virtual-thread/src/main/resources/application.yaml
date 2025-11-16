@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: virtual-thread
+  threads:
+    virtual:
+      enabled: true
+
+
+env:
+  url-a: ${SERVICE_A_URL:http://test:8080}
+  url-b: ${SERVICE_B_URL:http://test:8080}
+  url-c: ${SERVICE_C_URL:http://test:8080}
+
+feign:
+  httpclient:
+    max-connections: 200
+    max-connections-per-route: 50
+  okhttp:
+    enabled: true

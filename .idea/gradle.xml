@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/normal-threads" />
+        <option name="gradleJvm" value="25 (WSL)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/normal-threads" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/virtual-thread" />
+        <option name="gradleJvm" value="25 (WSL)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/virtual-thread" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/webflux-example" />
+        <option name="gradleJvm" value="25 (WSL)" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

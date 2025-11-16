@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/user/.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "id": 1,
+      "name": "Service A User"
+    },
+    "transformers": ["response-template"],
+    "fixedDelayMilliseconds": 100
+  }
+}

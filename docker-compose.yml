@@ -1,0 +1,110 @@
+version: "3.9"
+
+services:
+
+  service-a:
+    image: wiremock/wiremock:3.7.0
+    container_name: service-a
+    ports:
+      - "9010:8080"
+    volumes:
+      - ./mock/a:/home/wiremock
+    command: ["--verbose", "--local-response-templating"]
+    networks:
+      - demo-net
+
+  service-b:
+    image: wiremock/wiremock:3.7.0
+    container_name: service-b
+    ports:
+      - "9020:8080"
+    volumes:
+      - ./mock/b:/home/wiremock
+    command: ["--verbose", "--local-response-templating"]
+    networks:
+      - demo-net
+
+  service-c:
+    image: wiremock/wiremock:3.7.0
+    container_name: service-c
+    ports:
+      - "9030:8080"
+    volumes:
+      - ./mock/c:/home/wiremock
+    command: ["--verbose", "--local-response-templating"]
+    networks:
+      - demo-net
+
+  # ============================
+  app-normal:
+    build:
+      context: ./normal-threads
+      dockerfile: Dockerfile
+    container_name: app-normal
+    environment:
+      SERVICE_A_URL: "http://service-a:8080"
+      SERVICE_B_URL: "http://service-b:8080"
+      SERVICE_C_URL: "http://service-c:8080"
+    ports:
+      - "8081:8080"
+    depends_on:
+      - service-a
+      - service-b
+      - service-c
+    networks:
+      - demo-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app-webflux:
+    build:
+      context: ./webflux-example
+      dockerfile: Dockerfile
+    container_name: app-webflux
+    environment:
+      SERVICE_A_URL: "http://service-a:8080"
+      SERVICE_B_URL: "http://service-b:8080"
+      SERVICE_C_URL: "http://service-c:8080"
+    ports:
+      - "8082:8080"
+    depends_on:
+      - service-a
+      - service-b
+      - service-c
+    networks:
+      - demo-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app-vthreads:
+    build:
+      context: ./virtual-thread
+      dockerfile: Dockerfile
+    container_name: app-vthreads
+    environment:
+      SERVICE_A_URL: "http://service-a:8080"
+      SERVICE_B_URL: "http://service-b:8080"
+      SERVICE_C_URL: "http://service-c:8080"
+    ports:
+      - "8083:8080"
+    depends_on:
+      - service-a
+      - service-b
+      - service-c
+    networks:
+      - demo-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+networks:
+  demo-net:
+    driver: bridge
