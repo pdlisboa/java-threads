@@ -12,7 +12,6 @@
       "id": 1,
       "name": "Service C User"
     },
-    "transformers": ["response-template"],
-    "fixedDelayMilliseconds": 500
+    "transformers": ["response-template"]
   }
 }

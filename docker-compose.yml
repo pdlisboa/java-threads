@@ -45,8 +45,17 @@ services:
       SERVICE_A_URL: "http://service-a:8080"
       SERVICE_B_URL: "http://service-b:8080"
       SERVICE_C_URL: "http://service-c:8080"
+      JAVA_TOOL_OPTIONS: >
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=10001
+        -Dcom.sun.management.jmxremote.rmi.port=10001
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost
     ports:
       - "8081:8080"
+      - "10001:10001"
     depends_on:
       - service-a
       - service-b
@@ -68,8 +77,17 @@ services:
       SERVICE_A_URL: "http://service-a:8080"
       SERVICE_B_URL: "http://service-b:8080"
       SERVICE_C_URL: "http://service-c:8080"
+      JAVA_TOOL_OPTIONS: >
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=10002
+        -Dcom.sun.management.jmxremote.rmi.port=10002
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost
     ports:
       - "8082:8080"
+      - "10002:10002"
     depends_on:
       - service-a
       - service-b
@@ -91,8 +109,17 @@ services:
       SERVICE_A_URL: "http://service-a:8080"
       SERVICE_B_URL: "http://service-b:8080"
       SERVICE_C_URL: "http://service-c:8080"
+      JAVA_TOOL_OPTIONS: >
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=10003
+        -Dcom.sun.management.jmxremote.rmi.port=10003
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost
     ports:
       - "8083:8080"
+      - "10003:10003"
     depends_on:
       - service-a
       - service-b
@@ -104,6 +131,21 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+  influxdb:
+    image: influxdb:1.8
+    ports: [ "8086:8086" ]
+    environment:
+      - INFLUXDB_DB=k6
+
+  grafana:
+    image: grafana/grafana
+    ports: [ "3000:3000" ]
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+    volumes:
+      - ./grafana-dashboard:/var/lib/grafana/dashboards
 
 networks:
   demo-net:

@@ -12,7 +12,6 @@
       "id": 1,
       "name": "Service B User"
     },
-    "transformers": ["response-template"],
-    "fixedDelayMilliseconds": 300
+    "transformers": ["response-template"]
   }
 }

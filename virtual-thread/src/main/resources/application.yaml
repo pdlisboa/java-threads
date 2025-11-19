@@ -4,6 +4,14 @@ spring:
   threads:
     virtual:
       enabled: true
+  cloud:
+    openfeign:
+      httpclient:
+        enabled: true
+        hc5:
+          enabled: true
+        max-connections: 1000      # Padrão é baixo (ex: 200)
+        max-connections-per-route: 500 # Padrão é baixíssimo (ex: 50)
 
 
 env:
@@ -13,7 +21,10 @@ env:
 
 feign:
   httpclient:
-    max-connections: 200
-    max-connections-per-route: 50
+    enabled: true
+    hc5:
+      enabled: true
+    max-connections: 1000      # Padrão é baixo (ex: 200)
+    max-connections-per-route: 500 # Padrão é baixíssimo (ex: 50)
   okhttp:
     enabled: true
